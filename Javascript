@@ -1,0 +1,55 @@
+javascript
+$(document).ready(function() {
+    $('#reg-form').validate({
+        rules: {
+            name: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 6
+            },
+            'confirm-password': {
+                required: true,
+                minlength: 6,
+                equalTo: '#password'
+            }
+        },
+        messages: {
+            name: {
+                required: 'Please enter your name'
+            },
+            email: {
+                required: 'Please enter your email',
+                email: 'Please enter a valid email address'
+            },
+            password: {
+                required: 'Please enter your password',
+                minlength: 'Your password must be at least 6 characters long'
+            },
+            'confirm-password': {
+                required: 'Please confirm your password',
+                minlength: 'Your password must be at least 6 characters long',
+                equalTo: 'Your passwords do not match'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: 'register.php',
+                type: 'POST',
+                data: $(form).serialize(),
+                success: function(data) {
+                    if (data == 'success') {
+                        window.location.href = 'login.php';
+                    } else {
+                        alert(data);
+                    }
+                }
+            });
+        }
+    });
+});

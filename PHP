@@ -1,0 +1,35 @@
+<?php
+// Connection parameters for your MySQL database
+$host = "localhost";
+$username = "your_username";
+$password = "your_password";
+$database = "your_database";
+
+// Establish a connection to the MySQL database
+$connection = mysqli_connect($host, $username, $password, $database);
+
+// Check if the connection was successful
+if (!$connection) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Retrieve user input from the login form
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+// Prepare and execute the SQL query
+$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+$result = mysqli_query($connection, $query);
+
+// Check if the query was successful and if the user exists
+if (mysqli_num_rows($result) > 0) {
+    // User authenticated successfully
+    echo "Login successful!";
+} else {
+    // Invalid credentials
+    echo "Invalid username or password!";
+}
+
+// Close the database connection
+mysqli_close($connection);
+?>
